@@ -3,7 +3,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const URI =
-    "mongodb+srv://mohamed101291:22546344Mohamed@magcamp.vk31gig.mongodb.net/magCamp?retryWrites=true&w=majority";
+    "mongodb+srv://mohamed101291:22546344Mohamed@magcamp.tlnt3gu.mongodb.net/magcamp?retryWrites=true&w=majority";
 const userRouter = require("./routers/users");
 app.use(bodyParser.json());
 
