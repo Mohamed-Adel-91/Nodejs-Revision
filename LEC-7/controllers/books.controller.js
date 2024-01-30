@@ -55,7 +55,7 @@ exports.updateBook = async function (req, res) {
                 .json({ message: "Unauthorized , Access Denied" });
         }
     } catch (err) {
-        return res.status(400).send({ message: err });
+        return res.status(400).send({ message: err.stack });
     }
 };
 
