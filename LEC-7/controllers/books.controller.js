@@ -29,7 +29,7 @@ exports.deleteBook = async function (req, res) {
     try {
         const Role = req.user.role;
         if (Role === "admin") {
-            await BookModel.findByIdAndRemove(req.params.id);
+            await BookModel.findByIdAndDelete(req.params.id);
             return res.json({ message: "Books deleted", data: [] });
         } else {
             return res
