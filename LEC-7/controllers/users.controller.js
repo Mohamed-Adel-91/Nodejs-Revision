@@ -38,7 +38,12 @@ exports.login = async function (req, res) {
         }
         // Create and assign a token for the user
         const token = jwt.sign(
-            { _id: user._id, username: user.username, email: user.email },
+            {
+                _id: user._id,
+                username: user.username,
+                email: user.email,
+                role: user.role,
+            },
             "secrets-is-here"
         );
         res.header("auth-token", token).send({

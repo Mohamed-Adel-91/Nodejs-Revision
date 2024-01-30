@@ -1,7 +1,5 @@
 const BookModel = require("../models/books.schema");
 
-const jwt = require("jsonwebtoken");
-
 // @desc getAllBooks
 
 exports.getAllBooks = async function (req, res) {
@@ -29,8 +27,15 @@ exports.getOneBook = async function (req, res) {
 
 exports.deleteBook = async function (req, res) {
     try {
-        await BookModel.findByIdAndRemove(req.params.id);
-        return res.json({ message: "Books deleted", data: [] });
+        const Role = req.user.role;
+        if (Role === "admin") {
+            await BookModel.findByIdAndRemove(req.params.id);
+            return res.json({ message: "Books deleted", data: [] });
+        } else {
+            return res
+                .status(401)
+                .json({ message: "Unauthorized , Access Denied" });
+        }
     } catch (err) {
         return res.status(400).send({ message: err });
     }
@@ -40,8 +45,15 @@ exports.deleteBook = async function (req, res) {
 
 exports.updateBook = async function (req, res) {
     try {
-        await BookModel.findByIdAndUpdate(req.params.id, req.body);
-        return res.json({ message: "Books updated", data: [] });
+        const Role = req.user.role;
+        if (Role === "admin") {
+            await BookModel.findByIdAndUpdate(req.params.id, req.body);
+            return res.json({ message: "Books updated", data: req.body });
+        } else {
+            return res
+                .status(401)
+                .json({ message: "Unauthorized , Access Denied" });
+        }
     } catch (err) {
         return res.status(400).send({ message: err });
     }
@@ -51,8 +63,15 @@ exports.updateBook = async function (req, res) {
 
 exports.createBook = async function (req, res) {
     try {
-        const createBook = await BookModel.create(req.body);
-        return res.json({ message: "Books updated", data: createBook });
+        const Role = req.user.role;
+        if (Role === "admin") {
+            const createBook = await BookModel.create(req.body);
+            return res.json({ message: "Book Created", data: createBook });
+        } else {
+            return res
+                .status(401)
+                .json({ message: "Unauthorized , Access Denied" });
+        }
     } catch (err) {
         return res.status(400).send({ message: err });
     }
